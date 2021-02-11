@@ -1,0 +1,27 @@
+@import './variables';
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+    margin: 0;
+    height: 200vh;
+    
+    nav{
+        background-color: $lightGrey;
+        height: 10vh;
+        @include center;
+
+        #logo{
+            font-size: x-large;
+        }
+
+        a{
+            color: black;
+            text-decoration: none;
+            font-family: 'Lato', sans-serif;
+
+            img{
+                height: 40px;
+            }
+        }
+    }
+}

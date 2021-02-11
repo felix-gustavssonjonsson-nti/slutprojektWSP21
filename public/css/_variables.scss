@@ -1,0 +1,9 @@
+$lightGrey: #EEEEEE;
+$darkGrey: #2E2E2E;
+
+
+@mixin center {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
