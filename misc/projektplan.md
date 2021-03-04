@@ -5,7 +5,7 @@ Blocket liknande sida där man kan köpa och sälja saker. Man ska kunna skapa k
 Extra kan vara att man ska kunna tagga sina artiklar man lagt upp för att lättare hitta saker när man ska köpa något 
 
 ## 2. Vyer (visa bildskisser på dina sidor).
-startsida/hemsida
+startsida/hemsida (bilder tillkommer snart)
 
 skapa konto/logga in 
 

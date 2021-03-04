@@ -6,8 +6,8 @@ body {
     height: 200vh;
     
     nav{
-        background-color: $lightGrey;
-        height: 10vh;
+        background-color: $white;
+        height: 8vh;
         @include center;
 
         #logo{
