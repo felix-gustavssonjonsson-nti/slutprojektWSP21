@@ -7,3 +7,15 @@ $darkGrey: #2E2E2E;
     justify-content: space-around;
     align-items: center;
 }
+
+@mixin grid {
+    display: grid;
+    gap: 1rem;  
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: 
+    'sr'
+    'mn'
+    'mn2'
+    ;
+}

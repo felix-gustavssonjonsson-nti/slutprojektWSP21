@@ -5,8 +5,8 @@ body {
 }
 
 body nav {
-  background-color: #FFFFFF;
-  height: 8vh;
+  background-color: #2E2E2E;
+  height: 4vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -29,5 +29,56 @@ body nav a {
 
 body nav a img {
   height: 40px;
+}
+
+body div.Start_search_box {
+  display: -ms-grid;
+  display: grid;
+  gap: 1rem;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  -ms-grid-rows: (1fr)[3];
+      grid-template-rows: repeat(3, 1fr);
+      grid-template-areas: 'sr' 'mn' 'mn2';
+  height: 100%;
+  background: blueviolet;
+}
+
+body div.Start_search_box div.Start_search_flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: sr;
+  height: 30vh;
+  width: 100%;
+  background: brown;
+}
+
+body div.Start_search_box div.Start_search_flex input.Start_search_box {
+  height: 5vh;
+  width: 50vw;
+  font-size: x-large;
+}
+
+body div.Start_search_box div.Start_itemrow_flex {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: mn;
+}
+
+body footer {
+  margin-top: 10vh;
+  height: 5vh;
 }
 /*# sourceMappingURL=css.css.map */

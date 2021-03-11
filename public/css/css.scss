@@ -6,8 +6,8 @@ body {
     height: 200vh;
     
     nav{
-        background-color: $white;
-        height: 8vh;
+        background-color: $darkGrey;
+        height: 4vh;
         @include center;
 
         #logo{
@@ -24,4 +24,47 @@ body {
             }
         }
     }
+    
+    div.Start_search_box{
+        @include grid;
+        height: 100%;
+        background: blueviolet; 
+
+            div.Start_search_flex{
+                @include center; 
+                flex-direction: column;
+                grid-area: sr;
+                height: 30vh;
+                width: 100%;
+                background: brown;
+
+                input.Start_search_box{
+                    height: 5vh;
+                    width: 50vw;
+                    font-size: x-large;
+                }
+
+                div.Start_icon_categories{
+                    
+                }
+            }
+        
+        div.Start_itemrow_flex{
+                grid-area: mn;
+
+                div.Start_itemrow_content{
+
+                }
+        }
+    }
+    
+   
+    
+
+
+    footer{
+        margin-top: 10vh;
+        height: 5vh;
+    }
+
 }

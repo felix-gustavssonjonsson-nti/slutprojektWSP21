@@ -16,6 +16,6 @@ post('/user/login') do
     password = params[:password]
 end
 
-get('/') do 
+get('/publish') do 
     slim(:publish)
 end
