@@ -31,7 +31,7 @@ body nav a img {
   height: 40px;
 }
 
-body div.Start_search_box {
+body div.Start_wrapper {
   display: -ms-grid;
   display: grid;
   gap: 1rem;
@@ -44,7 +44,7 @@ body div.Start_search_box {
   background: blueviolet;
 }
 
-body div.Start_search_box div.Start_search_flex {
+body div.Start_wrapper div.Start_search_flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -61,20 +61,41 @@ body div.Start_search_box div.Start_search_flex {
   -ms-grid-column: 1;
   grid-area: sr;
   height: 30vh;
-  width: 100%;
+  width: 70%;
   background: brown;
+  border-radius: 5px;
+  margin: auto;
 }
 
-body div.Start_search_box div.Start_search_flex input.Start_search_box {
+body div.Start_wrapper div.Start_search_flex input.Start_search_box {
   height: 5vh;
   width: 50vw;
   font-size: x-large;
 }
 
-body div.Start_search_box div.Start_itemrow_flex {
+body div.Start_wrapper div.Start_search_flex div.Start_icon_categories img.Start_icon_1 {
+  height: 50px;
+}
+
+body div.Start_wrapper div.Start_itemrow_flex {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: mn;
+}
+
+body main.Publish_wrapper div.Publish_container form.Publish_form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 body footer {

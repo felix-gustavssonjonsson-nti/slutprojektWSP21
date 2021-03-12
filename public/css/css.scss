@@ -25,7 +25,7 @@ body {
         }
     }
     
-    div.Start_search_box{
+    div.Start_wrapper{
         @include grid;
         height: 100%;
         background: blueviolet; 
@@ -35,8 +35,10 @@ body {
                 flex-direction: column;
                 grid-area: sr;
                 height: 30vh;
-                width: 100%;
+                width: 70%;
                 background: brown;
+                border-radius: 5px;
+                margin: auto;
 
                 input.Start_search_box{
                     height: 5vh;
@@ -46,6 +48,9 @@ body {
 
                 div.Start_icon_categories{
                     
+                    img.Start_icon_1{
+                        height: 50px;
+                    }
                 }
             }
         
@@ -59,8 +64,19 @@ body {
     }
     
    
-    
+    main.Publish_wrapper{
+        div.Publish_container{
 
+            
+
+
+            form.Publish_form{
+            @include center;
+            flex-direction: column;
+
+            }
+        }
+    }
 
     footer{
         margin-top: 10vh;
