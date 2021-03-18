@@ -1,12 +1,25 @@
 main class="Publish_wrapper"
     div class="Publish_container"
-        form action="/publish" method="post" class="Publish_form"
-            input type="text" name="Name" placeholder=""
-            input type="text" name="Epost" placeholder=""
-            input type="text" name="Adress" placeholder=""
-            input type="text" name="Adress_repeat" placeholder=""
-            input type="text" name="Phone_number" placeholder=""
-            input type="text" name="Post_number" placeholder=""
-            input type="text" name="Location" placeholder=""
-            input type="submit" value="Lägg upp"
+        form action="/publish/new" method="post" class="Publish_form"
+            div class="Publish_container_left"
+                div class="Publish_container_form"
+                    label for="title" class="bold" Title
+                    input type="text" id="title" name="title" placeholder=""
+                div class="Publish_container_form"
+                    label for="adress" class="bold" Adress
+                    input type="text" id="adress" name="adress" placeholder=""
+                div class="Publish_container_form"
+                    label for="phone" class="bold" Telefon
+                    input type="text" id="phone" name="phone_number" placeholder=""
+            div class="Publish_container_right"
+                div class="Publish_container_form"
+                    input type="file" accept="image/*"
+                div class="Publish_container_form"
+                    lable for="name" class="bold" Content
+                    input type="text" id="content" name="content" placeholder=""
+                div class="Publish_container_form"   
+                    lable for="price" id="price" Pris
+                    input type="integer" id="price" name="price"
+                    input type="submit" value="Lägg upp"
+                    
     
