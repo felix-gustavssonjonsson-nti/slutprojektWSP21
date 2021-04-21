@@ -1,0 +1,22 @@
+p User : #{all_user_data["user_id"]} 
+p Date joined: #{all_user_data["date_joined"]}
+p Phone number: 
+p Adress: 
+
+input type="button" value="Edit" 
+/ button to switch modes 
+
+/ this form is specifically for editing and not the main 
+form action="/profile/edit" method="post" class="Profile_form"
+    div class="Profile_info_wrapper"
+         div class="Profile_container_form"
+                div class="Profile_info_user_id"
+                    label for="user_id" class="bold" Username
+                    input type="text" id="user_id" name="user_id" placeholder=""
+                div class="Proflie_info_phone_number"
+                    label for="phone" class="bold" Telefon
+                    input type="text" id="phone" name="phone_number" placeholder=""
+                div class="Profile_info_adress"
+                    label for="adress" class="bold" Adress
+                    input type="text" id="adress" name="adress" placeholder=""
+                    input type="submit" value="Uppdatera"

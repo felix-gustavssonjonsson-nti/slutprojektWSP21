@@ -1,0 +1,14 @@
+
+
+p Lades upp: #{all_data["date_created"]}
+p Adress: #{all_data["adress"]}
+h1 #{all_data["title"]} 
+p #{all_data["price"]} sek
+p #{all_data["content"]}
+p Användare: #{all_data["user_id"]}
+p Telefon: #{all_data["phone_number"]}
+
+- if all_data['user_id'] == session[:user_id]
+    nav class="content_"
+        a href="#{all_data['article_id']}/edit" Redigera
+        a href="#{all_data['article_id']}/delete" Ta bort

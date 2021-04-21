@@ -10,11 +10,24 @@ html lang="en"
     body
 
         nav
-            a href="menu" 
-                img src="/img/menu.svg" alt=""/
-            a href="/" id="logo"  Namn på Företaget
-            a href="/publish" Lägg upp
-            a href="/user/login" Logga in 
+            - if session[:user_id] != nil
+                a href="menu" 
+                    img src="/img/menu.svg" alt=""/
+                a href="/" id="logo"  Namn på Företaget
+                a href="/publish" Lägg upp
+                a href="/user/profile/#{session[:user_id]}" #{session[:mail]}
+            - elsif session[:user_id] != nil && session[:admin] > 0 
+                a href="menu" 
+                    img src="/img/menu.svg" alt=""/
+                a href="/" id="logo"  Namn på Företaget
+                a href="/admin" Admin 
+                a href="/publish" Lägg upp
+                a href="/user/profile/#{session[:user_id]}" #{session[:mail]}
+            - else 
+                a href="menu" 
+                    img src="/img/menu.svg" alt=""/
+                a href="/" id="logo"  Namn på Företaget
+                a href="/user/login" Logga in 
 
             
         

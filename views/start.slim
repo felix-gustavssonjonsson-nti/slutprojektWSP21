@@ -1,3 +1,5 @@
+- require_relative "../model.rb"
+
 div class="Start_wrapper"
     div class="Start_search_flex"
         input type="text" placeholder="Vad letar du efter?" class="Start_search_box" 
@@ -6,20 +8,20 @@ div class="Start_wrapper"
             img src="" alt=""/
             img src="" alt=""/
         p Kategorier
-    div class="Start_itemrow_flex"
-        div class="Start_itemrow_content"  
-            img src="" alt=""/
-            div 
-                div 
-            div 
-                div 
-    div class="Start_itemrow_flex"
-        div class="Start_itemrow_content"  
-            img src="" alt=""/
-            div 
-                div 
-            div 
-                div 
+
+    ul class="Start_item_list_remove"
+        - article.reverse_each do |article|
+            li 
+                div class="Start_item_column_wrapper"
+                    div class="Start_item_column_flex"  
+                        div class="Start_item_column_image"
+                            img src="" alt=""/
+                        div class="Start_item_column_content" 
+                            p class="content_adress_date" #{article["adress"]} #{article["date_created"]}
+                            a class="content_title" href="articles/#{article['article_id']}"  #{article["title"]} 
+                            p class="content_text" #{article["content"]}
+                            p class="content_price" #{article["price"]} sek
+
 
 /   div // main box
     div // group for search and categories symblobs
