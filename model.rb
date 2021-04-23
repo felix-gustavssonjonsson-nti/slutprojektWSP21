@@ -15,26 +15,28 @@ def select_user_information(mail)
     return get_db_as_hash().execute("SELECT * FROM user WHERE mail = ?", mail).first
 end
 
+def select_all_user_info()
+    return get_db_as_hash().execute("SELECT * FROM user")
+end 
+
 def select_all_user_info_id(user_id)
+    p "uder id #{user_id}s"
+    p "look here#{get_db_as_hash().execute("SELECT * FROM user WHERE user_id = ?", user_id).first}"
     return get_db_as_hash().execute("SELECT * FROM user WHERE user_id = ?", user_id).first
 end
 
-def select_user_admin_points(user_id)
-    return get_db_as_hash().execute("SELECT admin FROM admin WHERE user_id = ?", user_id).first
+
+def register_user(mail, password_digest, date_joined, admin)
+    return get_db_as_hash().execute("INSERT INTO user(mail, password_digest, date_joined, admin) VALUES (?, ?, ?, ?)", mail, password_digest, date_joined, admin)
 end
 
-def register_put_in_admin(user_id)
-    db = SQLite3::Database.new("db/data.db")
-    db.execute("INSERT INTO admin(user_id) VALUES (?)", user_id)
-end
-
-def register_user(mail, password_digest, date_joined)
-    db = SQLite3::Database.new("db/data.db")
-    db.execute("INSERT INTO user(mail, password_digest, date_joined) VALUES (?, ?, ?)", mail, password_digest, date_joined)
-end
-
-def new_post()
+def give_admin(admin, user_id)
+    return get_db_as_hash().execute("UPDATE user SET admin = 1  WHERE user_id = ? ", user_id).first
 end 
+
+def remove_admin(admin, user_id)
+    return get_db_as_hash().execute("UPDATE user SET admin = 0 WHERE user_id = ?", user_id).first 
+end
 
 
 def select_all_article_info()
@@ -56,3 +58,12 @@ end
 def delete_article(article_id)
     return get_db().execute("DELETE FROM article WHERE article_id = ?", article_id) 
 end
+
+
+def insert_tag(tag_name)
+    return get_db_as_hash().execute("INSERT INTO tags (tag_name) VALUES (?)", tag_name).first
+end 
+
+def select_tags()
+    return get_db_as_hash().execute("SELECT tag_name FROM tags")
+end 

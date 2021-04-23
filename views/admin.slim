@@ -1,4 +1,34 @@
+h1 Add tags
+form action="/admin/tags" method="post"
+    input type="text" name="tag_name" placeholder="Write here"
+    input type="submit"
+
+h2 Tag list 
+ul 
+    - tag_list.reverse_each do |tag_list|
+        li 
+            p #{tag_list["tag_name"]}
 
 
-form action="/articles/tags" method="post"
-    
+h3 User list
+ul class="Admin_user_list"
+        - user_list.reverse_each do |user_list|
+            li 
+                / unknown if this form is correct
+                / also dont show the own user on the list / or not let them take away their own admin 
+                - if user_list['admin'] == 0 or user_list['admin'] == nil 
+                    p User: #{user_list["user_id"]}
+                    p Mail: #{user_list["mail"]}
+                    p Date joined: #{user_list["date_joined"]}
+                    form action="/admin/give" method="post"
+                        input type="hidden" value="#{user_list["user_id"]}" name="admin_user_id"
+                        input type="hidden" value="#{session[:user_id]}" name="confirm_admin_id"
+                        input type="submit" value="Give Admin"
+                - elsif user_list['admin'] == 1
+                    p User: #{user_list["user_id"]}
+                    p Mail: #{user_list["mail"]}
+                    p Date joined: #{user_list["date_joined"]}
+                    form action="/admin/remove" method="post"
+                        input type="hidden" value="#{user_list["user_id"]}" name="admin_user_id"
+                        input type="hidden" value="#{session[:user_id]}" name="confirm_admin_id"
+                        input type="submit" value="Remove Admin"

@@ -20,14 +20,13 @@ post('/user/login') do
     password = params[:password] # från  
     user_information = select_user_information(mail)
     p user_information # something isnt here
-    admin = select_user_admin_points(user_id)
-    admin_roll = admin["admin"]
     password_digest = user_information["password_digest"]
     user_id = user_information["user_id"]
+    admin = user_information["admin"].to_i
     if BCrypt::Password.new(password_digest) == password
         session[:user_id] = user_id
         session[:mail] = mail
-        session[:admin] = admin_roll
+        session[:admin] = admin
         redirect('/')
     else 
         "Fel Lösenord"
@@ -39,6 +38,7 @@ post('/user/register') do
     password_input = params[:password]
     password_confirmation = params[:password_confirmation]
     date_joined = Time.now.getutc.to_s
+    admin = 0 
     db = SQLite3::Database.new("db/data.db")
     password = password_input 
 
@@ -48,8 +48,7 @@ post('/user/register') do
     if result.empty?
         if password_input == password_confirmation
             password_digest = BCrypt::Password.create(password)
-            register_user(mail, password_digest, date_joined)
-            register_put_in_admin(user_id)
+            register_user(mail, password_digest, date_joined, admin)
             redirect('/') 
         else
             "error" # no error msg also adds empty account. make a slim side for error 
@@ -71,9 +70,54 @@ post('/profile/edit') do
    
 end
 
+get("/logout") do 
+        session.destroy
+    redirect("/")
+end
+
+get("/admin") do 
+    user_list = select_all_user_info()
+    tag_list = select_tags()
+    slim(:"admin", locals:{user_list:user_list, tag_list:tag_list})
+end
+
+post("/admin/give") do 
+    user_id = params[:admin_user_id].to_i
+    admin_id = session[:user_id]
+    admin_information = select_all_user_info_id(admin_id)
+    is_admin = admin_information["admin"].to_i
+    if is_admin == 1
+        user_information = select_all_user_info_id(user_id)
+        is_admin = user_information["admin"].to_i
+        if is_admin == 0 
+            is_admin = 1
+            give_admin(is_admin, user_id) 
+            redirect("/admin")
+        end
+    end 
+end 
+
+post("/admin/remove") do 
+    user_id = params[:admin_user_id].to_i
+    admin_id = session[:user_id]
+    admin_information = select_all_user_info_id(admin_id)
+    logged_in_user_is_admin = admin_information["admin"].to_i
+    if logged_in_user_is_admin == 1
+        user_information = select_all_user_info_id(user_id)
+        is_admin = user_information["admin"].to_i
+        if is_admin == 1
+            is_admin = 0
+            remove_admin(is_admin, user_id) 
+            redirect("/admin")
+        end 
+    end 
+end 
+
+
 
 get('/publish') do 
-    slim(:publish)
+    tag_list = select_tags()
+    slim(:publish, locals:{tag_list:tag_list})
 end
 
 post('/publish/new') do 
@@ -84,6 +128,7 @@ post('/publish/new') do
     content = params[:content]
     price = params[:price]
     date_created = Time.now.getutc.to_s
+    tag = params[:tag]
 
     if title != "" && adress != "" && phone_number != "" && content != "" && price != ""    
         insert_into_article(title, content, price, user_id, adress, phone_number, date_created)
@@ -99,7 +144,7 @@ get('/articles/:id') do
     slim(:"articles/content", locals:{all_data:all_data})
 end 
 
-get ('/articles/:id/edit') do 
+get('/articles/:id/edit') do 
     article_id = params[:id].to_i
     all_data = select_all_article_info_id(article_id)
     slim(:"articles/edit", locals:{all_data:all_data})
@@ -128,4 +173,8 @@ get("/articles/:id/delete") do
     redirect('/')
 end 
 
-
+post("/admin/tags") do 
+    tag_name = params[:tag_name]
+    insert_tag(tag_name)
+    redirect('/admin')
+end 

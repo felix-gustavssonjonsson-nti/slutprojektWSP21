@@ -15,10 +15,14 @@ main class="Publish_wrapper"
                 div class="Publish_container_form"
                     label for="adress" class="bold" Adress
                     input type="text" id="adress" name="adress" placeholder=""
+                div class="Publish_container_form"
+                    select name="tag" id="tags"
+                        -tag_list.reverse.each do |tag|
+                            option value="#{tag['tag_name']}" = tag["tag_name"]
                 div class="Publish_container_form"   
                     lable for="price" id="price" Pris
                     input type="integer" id="price" name="price"
                     input type="submit" value="Lägg upp"
-                div class="Publish_container_form"
+               
                     
     

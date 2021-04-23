@@ -9,21 +9,25 @@ html lang="en"
         <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
     body
 
-        nav
-            - if session[:user_id] != nil
+        
+        - if session[:user_id] != nil  && session[:admin] == 1
+            nav
+                a href="menu" 
+                    img src="/img/menu.svg" alt=""/
+                a href="/" id="logo"  Namn på Företaget
+                a href="/publish" Lägg upp
+                a href="/admin" Admin sida
+                a href="/user/profile/#{session[:user_id]}" #{session[:mail]}
+                / below does not work properly, doesnt show the link to admins 
+        - elsif session[:user_id] != nil 
+            nav 
                 a href="menu" 
                     img src="/img/menu.svg" alt=""/
                 a href="/" id="logo"  Namn på Företaget
                 a href="/publish" Lägg upp
                 a href="/user/profile/#{session[:user_id]}" #{session[:mail]}
-            - elsif session[:user_id] != nil && session[:admin] > 0 
-                a href="menu" 
-                    img src="/img/menu.svg" alt=""/
-                a href="/" id="logo"  Namn på Företaget
-                a href="/admin" Admin 
-                a href="/publish" Lägg upp
-                a href="/user/profile/#{session[:user_id]}" #{session[:mail]}
-            - else 
+        - else
+            nav 
                 a href="menu" 
                     img src="/img/menu.svg" alt=""/
                 a href="/" id="logo"  Namn på Företaget
