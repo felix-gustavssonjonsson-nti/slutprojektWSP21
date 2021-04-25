@@ -29,21 +29,27 @@ end
 # @param [String] password, The password
 #
 # @see Model#select_user_information
+# @see Model#mail_exist
 post('/user/login') do
     mail = params[:mail]
-    password = params[:password] # från  
-    user_information = select_user_information(mail)
-    p user_information # something isnt here
-    password_digest = user_information["password_digest"]
-    user_id = user_information["user_id"]
-    admin = user_information["admin"].to_i
-    if BCrypt::Password.new(password_digest) == password
-        session[:user_id] = user_id
-        session[:mail] = mail
-        session[:admin] = admin
-        redirect('/')
-    else 
-        "Fel Lösenord"
+    password = params[:password]  
+    mail_check = mail_exists(mail)
+      
+    if mail_check == []
+        "Incorrect input"
+    else
+        user_information = select_user_information(mail)
+        password_digest = user_information["password_digest"]
+        user_id = user_information["user_id"]
+        admin = user_information["admin"].to_i 
+        if BCrypt::Password.new(password_digest) == password
+            session[:user_id] = user_id
+            session[:mail] = mail
+            session[:admin] = admin
+            redirect('/')
+        else 
+            "Fel Lösenord"
+        end
     end 
 end
 
@@ -72,10 +78,10 @@ post('/user/register') do
             register_user(mail, password_digest, date_joined, admin)
             redirect('/') 
         else
-            "error" # no error msg also adds empty account. make a slim side for error 
+            "Please put in right password in both field" # no error msg also adds empty account. make a slim side for error 
         end
     else
-        "error"
+        "something is wrong"
     end
 end
 

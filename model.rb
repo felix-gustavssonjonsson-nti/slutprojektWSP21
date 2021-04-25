@@ -36,6 +36,13 @@ module Model
         return get_db_as_hash().execute("SELECT * FROM user")
     end 
 
+    # Controls wether the mail exists in the database or not 
+    #
+    # @param [String] mail, the mail of the user 
+    def mail_exists(mail)
+        return get_db_as_hash().execute("SELECT * FROM user WHERE mail = ?", mail)
+    end
+
     # Outputs all data of a single user 
     #
     # @param [Integer] user_id, The ID of the user 
