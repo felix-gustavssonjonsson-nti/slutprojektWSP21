@@ -2,6 +2,7 @@
 body {
   margin: 0;
   height: 200vh;
+  color: white;
 }
 
 body nav {
@@ -22,7 +23,8 @@ body nav #logo {
 }
 
 body nav a {
-  color: black;
+  color: white;
+  color: white;
   text-decoration: none;
   font-family: 'Lato', sans-serif;
 }

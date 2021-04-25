@@ -1,6 +1,6 @@
 main class="Publish_wrapper"
     div class="Publish_container"
-        form action="/publish/new" method="post" class="Publish_form"
+        form action="/publish/new" method="post" class="Publish_form" id="add_post"
             div class="Publish_container_left"
                 div class="Publish_container_form"
                     label for="title" class="bold" Title
@@ -15,14 +15,15 @@ main class="Publish_wrapper"
                 div class="Publish_container_form"
                     label for="adress" class="bold" Adress
                     input type="text" id="adress" name="adress" placeholder=""
-                div class="Publish_container_form"
-                    select name="tag" id="tags"
-                        -tag_list.reverse.each do |tag|
-                            option value="#{tag['tag_name']}" = tag["tag_name"]
                 div class="Publish_container_form"   
                     lable for="price" id="price" Pris
                     input type="integer" id="price" name="price"
                     input type="submit" value="Lägg upp"
+        div class="Publish_container_form"
+            select name="tag" form="add_post"
+                -tag_list.reverse.each do |tag|
+                    option value="#{tag['tag_id']}" = tag["tag_name"]
+                
                
                     
     

@@ -4,17 +4,31 @@ require 'sqlite3'
 require 'bcrypt'
 require 'date'
 require './model.rb'
+
 enable :sessions
 
+include Model 
+
+# Display Landing Page
+#
+# @see Model#select_all_article_info
 get('/') do
     article = select_all_article_info() 
     slim(:"start", locals:{article:article})
 end
 
+# Display a login form 
+#
 get('/user/login') do 
     slim(:"user/login")
 end
 
+# Attemps login and updates the session redicrecting to ('/') in case of successful login
+#
+# @param [String] mail, The mail adress
+# @param [String] password, The password
+#
+# @see Model#select_user_information
 post('/user/login') do
     mail = params[:mail]
     password = params[:password] # från  
@@ -33,6 +47,13 @@ post('/user/login') do
     end 
 end
 
+# Attempts registration and redirects to ('/') in case of successful registration
+#
+# @param [String] mail, The mail adress  
+# @param [String] password, The password
+# @param [String] password_confirmation, The repeated password
+#
+# @see Model#register_user
 post('/user/register') do 
     mail = params[:mail]
     password_input = params[:password]
@@ -58,6 +79,14 @@ post('/user/register') do
     end
 end
 
+# Displays currently logged in user profile 
+#
+# @param [Integer] :id, The ID of the user 
+# @param [Integer] user_id, The ID of the current user
+# @param [Integer] article_id, The id of an article
+#
+# @see Model#select_all_user_info_id
+# @see Mode#select_all_article_info_id
 get('/user/profile/:id') do 
     user_id = session[:user_id]
     article_id = params[:id].to_i
@@ -66,21 +95,30 @@ get('/user/profile/:id') do
     slim(:"user/profile", locals:{all_data:all_data, all_user_data:all_user_data})
 end 
 
-post('/profile/edit') do
-   
-end
-
+# Attempts logout and destroys the session and redirects to ('/') 
+#
 get("/logout") do 
         session.destroy
     redirect("/")
 end
 
+# Displays an admin page 
+#
+# @see Model#select_all_user_info
+# @see Model#select_tags
 get("/admin") do 
     user_list = select_all_user_info()
     tag_list = select_tags()
     slim(:"admin", locals:{user_list:user_list, tag_list:tag_list})
 end
 
+# Updates a users admin privileges and redirects to ('/admin')
+#
+# @param [Integer] user_id, The ID of the user being given admin   
+# @param [Integer] admin_id, The ID of the current user 
+#
+# @see Model#select_all_user_info_id
+# @see Model#give_admin
 post("/admin/give") do 
     user_id = params[:admin_user_id].to_i
     admin_id = session[:user_id]
@@ -97,6 +135,13 @@ post("/admin/give") do
     end 
 end 
 
+# Updates a users admin privileges and redirects to ('/admin')
+#
+# @param [Integer] user_id, The ID of the user having admin removed  
+# @param [Integer] admin_id, The ID of the current user 
+#
+# @see Model#select_all_user_info_id
+# @see Model#remove_adminl
 post("/admin/remove") do 
     user_id = params[:admin_user_id].to_i
     admin_id = session[:user_id]
@@ -113,13 +158,36 @@ post("/admin/remove") do
     end 
 end 
 
+# Inserts a tag written by the admin into the db and redirects to '/admin'
+#
+# @param [String] tag_name, The name of the added tag  
+#
+# @see Model#insert_tag
+post("/admin/tags") do 
+    tag_name = params[:tag_name]
+    insert_tag(tag_name)
+    redirect('/admin')
+end 
 
-
+# Displays Publish Page
+#
+# @see Model#select_tags
 get('/publish') do 
     tag_list = select_tags()
     slim(:publish, locals:{tag_list:tag_list})
 end
 
+# Creates a new article and redirects to ('/')
+#
+# @param [String] title, The title of the article
+# @param [Integer] user_id, The logged in users ID
+# @param [String] adress, The adress of the user
+# @param [Integer] phone_number, The phone number of the user 
+# @param [String] content, The content of the Article 
+# @param [Integer] price, The set price of the Article 
+# @param [Integer] tag_id, The ID of the selected tag of the Article
+#
+# @see Model#insert_into_article
 post('/publish/new') do 
     title = params[:title]
     user_id = session[:user_id]
@@ -128,28 +196,51 @@ post('/publish/new') do
     content = params[:content]
     price = params[:price]
     date_created = Time.now.getutc.to_s
-    tag = params[:tag]
-
-    if title != "" && adress != "" && phone_number != "" && content != "" && price != ""    
-        insert_into_article(title, content, price, user_id, adress, phone_number, date_created)
+    tag_id = params[:tag].to_i
+    
+    if title != "" && adress != "" && phone_number != "" && content != "" && price != "" && tag_id != ""   
+        insert_into_article(title, content, price, user_id, adress, phone_number, date_created, tag_id)
         redirect("/")
     else 
         "Fill in all" # better msg needed
     end 
 end
 
+# Displays a single Article 
+#
+# @param [Integer] :id, The ID of the article 
+# @param [Integer] article_id, The ID of the article
+#
+# @see Model#select_all_article_info_id
 get('/articles/:id') do 
     article_id = params[:id].to_i
     all_data = select_all_article_info_id(article_id)
     slim(:"articles/content", locals:{all_data:all_data})
 end 
 
+# Displays the article edit page 
+#
+# @param [Integer] :id, The ID of the article 
+# @param [Integer] article_id, The ID of the article
+#
+# @see Model#select_all_article_info_id
 get('/articles/:id/edit') do 
     article_id = params[:id].to_i
     all_data = select_all_article_info_id(article_id)
     slim(:"articles/edit", locals:{all_data:all_data})
 end
 
+# Updates an existing article and redirects to ('/')
+#
+# @param [Integer] :id, The ID of the article 
+# @param [Integer] article_id, The ID of the article
+# @param [String] title, The title of the article
+# @param [String] adress, The adress of the user
+# @param [Integer] phone_number, The phone number of the user 
+# @param [String] content, The content of the Article 
+# @param [Integer] price, The set price of the Article 
+#
+# @see Model#update_article
 post("/articles/:id/update") do #the form in the update slim file 
     article_id = params[:id].to_i 
     title = params[:title]
@@ -167,14 +258,16 @@ post("/articles/:id/update") do #the form in the update slim file
     end
 end
 
+# Deletes and existing article and redirects to '/'
+#
+# @param [Integer] :id, The ID of the article 
+# @param [Integer] article_id, The ID of the article
+#
+# @see Model#delete_article
 get("/articles/:id/delete") do 
     article_id = params[:id].to_i
     delete_article(article_id)
     redirect('/')
 end 
 
-post("/admin/tags") do 
-    tag_name = params[:tag_name]
-    insert_tag(tag_name)
-    redirect('/admin')
-end 
+
