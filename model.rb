@@ -2,7 +2,6 @@ module Model
 
    # Grants access to the database 
    #
-   # @return [Array] containing entire database 
     def get_db()
         return SQLite3::Database.new("db/data.db")
     end
