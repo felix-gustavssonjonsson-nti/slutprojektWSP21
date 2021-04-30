@@ -30,6 +30,7 @@ end
 #
 # @see Model#select_user_information
 # @see Model#mail_exist
+# @see Model#password_check
 post('/user/login') do
     mail = params[:mail]
     password = params[:password]  
@@ -42,13 +43,13 @@ post('/user/login') do
         password_digest = user_information["password_digest"]
         user_id = user_information["user_id"]
         admin = user_information["admin"].to_i 
-        if BCrypt::Password.new(password_digest) == password
+        if password_check(password_digest) == password
             session[:user_id] = user_id
             session[:mail] = mail
             session[:admin] = admin
             redirect('/')
         else 
-            "Fel Lösenord"
+            "Fel Lösenord eller mail"
         end
     end 
 end
@@ -60,21 +61,21 @@ end
 # @param [String] password_confirmation, The repeated password
 #
 # @see Model#register_user
+# @see Model#mail_exists 
+# @see Model#password_digesting
 post('/user/register') do 
     mail = params[:mail]
     password_input = params[:password]
     password_confirmation = params[:password_confirmation]
     date_joined = Time.now.getutc.to_s
     admin = 0 
-    db = SQLite3::Database.new("db/data.db")
     password = password_input 
-
-    result = db.execute("SELECT user_id  FROM user WHERE mail=?", mail)
+    mail_check = mail_exists(mail)
 
     # does not count for different mails adresses
-    if result.empty?
-        if password_input == password_confirmation
-            password_digest = BCrypt::Password.create(password)
+    if mail_check.empty?
+        if  password_input == password_confirmation
+            password_digest = password_digesting(password)
             register_user(mail, password_digest, date_joined, admin)
             redirect('/') 
         else
@@ -270,7 +271,7 @@ end
 # @param [Integer] article_id, The ID of the article
 #
 # @see Model#delete_article
-get("/articles/:id/delete") do 
+post("/articles/:id/delete") do # wrong route also edit needse updtade 
     article_id = params[:id].to_i
     delete_article(article_id)
     redirect('/')

@@ -1,4 +1,5 @@
 module Model 
+    require 'bcrypt'
 
    # Grants access to the database 
    #
@@ -41,6 +42,26 @@ module Model
     # @param [String] mail, the mail of the user 
     def mail_exists(mail)
         return get_db_as_hash().execute("SELECT * FROM user WHERE mail = ?", mail)
+    end
+
+    # Uncrypts the password to check if the user put inserted it right
+    #
+    # @param [String] password_digest, the crypted password of the user
+    #
+    # @return [String] uncrypted_password, the uncrypted password of the user 
+    def password_check(password_digest)
+        uncrypted_password = BCrypt::Password.new(password_digest) 
+        return uncrypted_password
+    end
+
+    # Inputs the users new password and encrypts it
+    #
+    # @param [String] password, The uncrypted version of the users password
+    #
+    # @return [String] crypted_password, the encrypted password of the user
+    def password_digesting(password)
+        crypted_password = BCrypt::Password.create(password)
+        return crypted_password
     end
 
     # Outputs all data of a single user 

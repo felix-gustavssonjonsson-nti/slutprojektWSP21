@@ -2,7 +2,7 @@
 body {
   margin: 0;
   height: 200vh;
-  color: white;
+  color: black;
 }
 
 body nav {
@@ -23,8 +23,8 @@ body nav #logo {
 }
 
 body nav a {
-  color: white;
-  color: white;
+  color: black;
+  color: black;
   text-decoration: none;
   font-family: 'Lato', sans-serif;
 }
@@ -98,6 +98,11 @@ body main.Publish_wrapper div.Publish_container form.Publish_form {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+body div.content_wrapper {
+  color: black;
+  background-color: rebeccapurple;
 }
 
 body footer {
