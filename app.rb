@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'slim'
 require 'sqlite3'
-require 'bcrypt'
 require 'date'
 require './model.rb'
 
@@ -277,4 +276,11 @@ post("/articles/:id/delete") do # wrong route also edit needse updtade
     redirect('/')
 end 
 
-
+# post("/profile/edit") do 
+#     mail = params[:mail]
+#     password = params[:password]
+#     password = password_digesting(password)
+#     user_id = session[:user_id]
+#     insert_into_article(mail, password, user_id)
+#     redirect('/user/profile/:id')
+# end 

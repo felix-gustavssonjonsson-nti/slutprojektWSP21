@@ -64,6 +64,15 @@ module Model
         return crypted_password
     end
 
+    ##
+    #
+    #
+    #
+    #
+    def insert_new_profile(mail, password, user_id)
+        return get_db_as_hash().execute("UPDATE user SET mail = mail, password_digest = password WHERE user_id = ?", user_id)
+    end
+
     # Outputs all data of a single user 
     #
     # @param [Integer] user_id, The ID of the user 
