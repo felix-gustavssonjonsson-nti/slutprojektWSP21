@@ -20,7 +20,7 @@ include Model
 # @see Model#select_all_article_info
 get('/') do
     article = select_all_article_info() 
-    slim(:"start", locals:{article:article})
+    slim(:"index", locals:{article:article})
 end
 
 # Display a login form 
@@ -119,10 +119,10 @@ end
 #
 # @see Model#select_all_user_info
 # @see Model#select_tags
-get("/admin") do 
+get("/user/admin") do 
     user_list = select_all_user_info()
     tag_list = select_tags()
-    slim(:"admin", locals:{user_list:user_list, tag_list:tag_list})
+    slim(:"user/admin", locals:{user_list:user_list, tag_list:tag_list})
 end
 
 # Updates a users admin privileges and redirects to ('/admin')
@@ -143,7 +143,7 @@ post("/admin/give") do
         if is_admin == 0 
             is_admin = 1
             give_admin(is_admin, user_id) 
-            redirect("/admin")
+            redirect("/user/admin")
         end
     end 
 end 
@@ -166,7 +166,7 @@ post("/admin/remove") do
         if is_admin == 1
             is_admin = 0
             remove_admin(is_admin, user_id) 
-            redirect("/admin")
+            redirect("/user/admin")
         end 
     end 
 end 
@@ -179,15 +179,15 @@ end
 post("/admin/tags") do 
     tag_name = params[:tag_name]
     insert_tag(tag_name)
-    redirect('/admin')
+    redirect('/user/admin')
 end 
 
 # Displays Publish Page
 #
 # @see Model#select_tags
-get('/publish') do 
+get('/articles/publish') do 
     tag_list = select_tags()
-    slim(:publish, locals:{tag_list:tag_list})
+    slim(:"articles/publish", locals:{tag_list:tag_list})
 end
 
 # Creates a new article and redirects to ('/')
