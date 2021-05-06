@@ -8,6 +8,13 @@ enable :sessions
 
 include Model 
 
+# before("/articles/:id")) do 
+#     if (session[:user_id] == nil) && (request.path_info !='/')
+#         session[:error] = "you cant see this"
+#         redirect()
+#     end
+# end
+
 # Display Landing Page
 #
 # @see Model#select_all_article_info
@@ -233,7 +240,12 @@ end
 get('/articles/:id/edit') do 
     article_id = params[:id].to_i
     all_data = select_all_article_info_id(article_id)
-    slim(:"articles/edit", locals:{all_data:all_data})
+    user_id = select_all_article_info_id(article_id)["user_id"]
+    if user_id = session[:user_id]
+        slim(:"articles/edit", locals:{all_data:all_data})
+    else
+        "Kan ej modifiera någon annans artikel"
+    end
 end
 
 # Updates an existing article and redirects to ('/')
@@ -255,7 +267,6 @@ post("/articles/:id/update") do #the form in the update slim file
     phone_number = params[:phone_number]
     content = params[:content]
     price = params[:price]
-
     if title != "" && adress != "" && phone_number != "" && content != "" && price != ""    
         update_article(title, content, price, adress, phone_number, date_uploaded, article_id)
         redirect("/")
@@ -272,15 +283,12 @@ end
 # @see Model#delete_article
 post("/articles/:id/delete") do # wrong route also edit needse updtade 
     article_id = params[:id].to_i
-    delete_article(article_id)
-    redirect('/')
+    user_id = select_all_article_info_id(article_id)["user_id"]
+    if user_id == session[:user_id] 
+        delete_article(article_id)
+        redirect('/')
+    else 
+        "Kan ej ta bort någon annans artikel"
+    end
 end 
 
-# post("/profile/edit") do 
-#     mail = params[:mail]
-#     password = params[:password]
-#     password = password_digesting(password)
-#     user_id = session[:user_id]
-#     insert_into_article(mail, password, user_id)
-#     redirect('/user/profile/:id')
-# end 
