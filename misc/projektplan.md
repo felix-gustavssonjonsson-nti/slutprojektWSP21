@@ -70,5 +70,13 @@ start.slim är landing pagen för hemsidan, här visas hela listan på artiklar 
 och visar upp den specifika artiklens information. 
 
 
+app.rb är applikaions filen och innehåller all logik till hemsidan, inom MVC räknas app.rb som controllern. Dock har alla funktioner som används inom app.rb lagts i en egen fil, model.rb. app.rb kallar till model.rb varje gång en funktion behövs användas. 
+
+Inom model.rb finns all bland annat all validering involverande bcrypt och databasnteraktioner.
+
+Public mappen innehåller all css och javascript till sidan. För css använder jag scss där all css skrivs i en mer strukturerad form. I samma public mapp ligger också 
+bilder och ikoner som används till sidan.
+
+
 
 
