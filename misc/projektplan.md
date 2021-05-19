@@ -74,9 +74,15 @@ app.rb är applikaions filen och innehåller all logik till hemsidan, inom MVC r
 
 Inom model.rb finns all bland annat all validering involverande bcrypt och databasnteraktioner.
 
-Public mappen innehåller all css och javascript till sidan. För css använder jag scss där all css skrivs i en mer strukturerad form. I samma public mapp ligger också 
+I skisser mappen ligger alla skisser till sidan, här ligger också ER-diagrammet för databasen. 
+
+Public/doc mappen innehåller all css och javascript till sidan. För css använder jag scss där all css skrivs i en mer strukturerad form. I samma public mapp ligger också 
 bilder och ikoner som används till sidan.
 
+db mappen innehåller databasfilen där all data för sidan sparas. Där lagras bland annat alla användarnas 
+information som mail och deras krypterad lösenord. All data för artiklarna och kategorierna sparas också här. För mer information hur exakt de olika tabellerna är strukturerade och relaterade till varandra referera till ER-diagrammet i skisser mappen. 
 
+misc mappen håller allt annat orelaterat som projektplanen och tidsscheman.  
 
+.yardoc är allt som genererats efter att ha kommenterat med yardoc. 
 
