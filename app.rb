@@ -8,12 +8,6 @@ enable :sessions
 
 include Model 
 
-# before("/articles/:id")) do 
-#     if (session[:user_id] == nil) && (request.path_info !='/')
-#         session[:error] = "you cant see this"
-#         redirect()
-#     end
-# end
 
 # Display Landing Page
 #
